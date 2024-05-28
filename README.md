@@ -7,8 +7,8 @@ This Node.js script automates the process of backing up MongoDB databases and se
 1. Clone the repository:
 
 ```bash
-git clone <repository-url>
-cd <repository-directory>
+git clone git@github.com:osternaudClem/backup-mongo.git
+cd backup-mongo
 ```
 
 2. Install the dependencies:

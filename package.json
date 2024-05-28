@@ -5,7 +5,7 @@
   "author": "Cl3tus <osternaud.clement@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "backup": "tsc && node dist/src/backup-mongodb.js"
+    "start": "tsc && node dist/src/backup-mongodb.js"
   },
   "dependencies": {
     "archiver": "^7.0.1",

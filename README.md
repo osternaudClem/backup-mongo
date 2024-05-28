@@ -1,69 +1,56 @@
-# Backup and Transfer Script
+# MongoDB Backup Script
 
-This project provides a Node.js script for automatically backing up a specified directory, compressing it into a ZIP file, and securely transferring it to a Synology server. It is designed to run on a Debian server and uses cron for scheduling.
-
-## Features
-
-- **Automatic Backup:** Zips the specified directory and saves the output in a designated location.
-- **Secure Transfer:** Uses SCP (Secure Copy Protocol) to securely transfer the backup file to a Synology server.
-- **Scheduled Execution:** Utilizes cron jobs for automated execution at configured times.
-
-## Prerequisites
-
-Ensure you have the following installed on your Debian server:
-
-- Node.js (v12.x or newer)
-- npm (Node Package Manager)
+This Node.js script automates the process of backing up MongoDB databases and sending them via email as a zip archive.
 
 ## Installation
 
-Follow these steps to set up the project:
+1. Clone the repository:
 
-1. **Clone the repository:**
-   ```bash
-   git clone [repository-url]
-   cd [project-folder]
-   ```
-
-````
-
-2. **Install dependencies:**
- ```bash
- npm install
-````
-
-3. **Set up environment variables:**
-   Create a .env file in the root of your project or export the variables in your environment:
-
-```plaintext
-FOLDER_TO_ZIP='/path/to/folder'
-OUTPUT_PATH='/path/to/output/folder.zip'
-SYNOLOGY_HOST='your-synology-ip'
-SYNOLOGY_USERNAME='your-username'
-SYNOLOGY_PASSWORD='your-password'
-SYNOLOGY_PATH='/path/on/synology'
+```bash
+git clone <repository-url>
+cd <repository-directory>
 ```
+
+2. Install the dependencies:
+
+```bash
+npm install
+```
+
+3. Duplicate the `.env-sample` file and rename it to `.env`.
+4. Fill in the required environment variables in the `.env` file.
 
 ## Usage
 
-To run the script manually, ensure the environment variables are set:
+To run the backup script, execute:
 
 ```bash
-npx ts-node backup.ts
+npm start
 ```
 
-### Setting Up the Cron Job
+The script will schedule the backup process to run daily at 1 AM Paris time.
 
-To schedule the script to run automatically, ensure the environment variables are available to the cron environment, or set them directly in the crontab:
+## Features
 
-```bash
-0 1 * * * /usr/bin/node /path/to/mybackupscript/dist/backup.js
+- **Automatic Backup**: Backs up all MongoDB databases, excluding system databases like 'admin', 'config', and 'local'.
+- **Email Notification**: Sends the backup as a zip archive via email using nodemailer.
+
+## Configuration
+
+### Schedule
+
+You can customize the backup schedule by modifying the cron expression in the `schedule.scheduleJob()` function call in `index.js`.
+
+```javascript
+schedule.scheduleJob("0 1 * * *", function () {
+    backupMongoDB();
+});
 ```
 
-## Contributing
+### Excluded Collections
 
-Contributions are welcome! Please feel free to submit pull requests or open issues to improve the functionality or address any bugs.
+To exclude specific collections from being backed up, update the `COLLECTION_AVOID_LIST` array in `index.js`.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```javascript
+const COLLECTION_AVOID_LIST = ["admin", "config", "local"];
+```

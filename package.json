@@ -1,0 +1,26 @@
+{
+  "name": "backup-scripts",
+  "version": "1.0.0",
+  "main": "dist/backup.js",
+  "author": "Cl3tus <osternaud.clement@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "backup": "tsc && node dist/src/backup-mongodb.js"
+  },
+  "dependencies": {
+    "archiver": "^7.0.1",
+    "dotenv": "^16.4.5",
+    "mongodb": "^6.6.2",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.2",
+    "@types/node": "^20.12.7",
+    "@types/node-schedule": "^2.1.7",
+    "@types/nodemailer": "^6.4.15",
+    "colors": "^1.4.0",
+    "date-fns": "^3.6.0",
+    "node-schedule": "^2.1.1",
+    "nodemailer": "^6.9.13"
+  }
+}
